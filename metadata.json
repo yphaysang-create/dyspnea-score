@@ -1,0 +1,5 @@
+{
+  "name": "Dyspnea Assessment Tool",
+  "description": "เครื่องมือประเมินภาวะเหนื่อยหอบ (Dyspnea) โดยใช้ Visual Analog Scale เพื่อช่วยในการประเมินอาการเบื้องต้น",
+  "requestFramePermissions": []
+}
