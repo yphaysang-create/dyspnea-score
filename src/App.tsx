@@ -153,30 +153,31 @@ export default function App() {
       </header>
 
       <main className="w-full max-w-7xl space-y-12 pb-24 px-4 overflow-hidden">
-        {/* Visual Selector Grid - 11 Options Scale 0-10 in a horizontal scrollable row */}
-        <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
-          <section className="flex gap-4 md:gap-6 min-w-max px-4">
+        {/* Visual Selector Grid - 11 Options Scale 0-10 in a vertical scrollable grid */}
+        <div className="w-full h-[600px] overflow-y-auto px-4 py-8 rounded-[3rem] bg-slate-50/50 border border-slate-100 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
             {SCORE_POINTS.map(({ score: pointScore, level }) => (
               <motion.div 
                 key={pointScore}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="relative w-[360px] md:w-[420px] shrink-0"
+                className="relative w-full"
               >
                 <div
                   onClick={() => handleLevelSelect(pointScore)}
                   className={cn(
-                    "relative flex flex-col items-center rounded-3xl border-2 transition-all duration-300 overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.03)]",
+                    "relative flex flex-col items-center rounded-3xl border-2 transition-all duration-300 overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.03)] mx-auto",
                     score === pointScore 
                       ? `${level.color} ring-8 ring-blue-50 z-10 shadow-xl ${level.bgColor}` 
                       : "border-slate-100 hover:border-blue-200 bg-white"
                   )}
+                  style={{ maxWidth: "380px" }}
                 >
                   <div className="w-full aspect-square overflow-hidden bg-white relative group flex items-center justify-center">
                     <img 
                       src={level.imageUrl} 
                       alt={level.label}
                       className={cn(
-                        "w-[350px] h-[350px] object-contain transition-all duration-700",
+                        "w-full h-full object-contain transition-all duration-700 p-2",
                         score === pointScore ? "scale-105" : "grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-100"
                       )}
                       referrerPolicy="no-referrer"
