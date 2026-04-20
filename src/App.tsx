@@ -28,14 +28,14 @@ const LEVELS = [
     scoreDisplay: "0-2",
     defaultScore: 0,
     label: "ปกติ",
-    description: "ปกติ (No Disturbance)",
+    description: "ระดับ 0-2: หายใจปกติ (No Disturbance)",
     color: "border-[#4caf50]",
     textColor: "text-[#2e7d32]",
     bgColor: "bg-[#e8f5e9]",
     shadowColor: "shadow-[#e8f5e9]",
-    advice: "✅ พักผ่อนตามปกติ ไม่ต้องมีการปรับเปลี่ยนการดูแล",
+    advice: "✅ พักผ่อนได้ตามปกติ: Resting comfortably. No change needed.",
     icon: Activity,
-    imageUrl: getDirectLink("1XqIBQ1hI70waw82NjQmYFwStSxOWlZga")
+    imageUrl: getDirectLink("1yzIgIL6aNxLciVslsKLIRn_-agYAs7aG") // Updated for Score 0-2 image
   },
   {
     id: "level-2",
@@ -43,14 +43,14 @@ const LEVELS = [
     scoreDisplay: "3-5",
     defaultScore: 4,
     label: "เหนื่อยเล็กน้อย",
-    description: "เหนื่อยเล็กน้อย (Mild Disturbance)",
+    description: "ระดับ 3-5: เหนื่อยเล็กน้อย (Mild Disturbance)",
     color: "border-[#fdd835]",
     textColor: "text-[#fbc02d]",
     bgColor: "bg-[#fffde7]",
     shadowColor: "shadow-[#fffde7]",
-    advice: "⚠️ เริ่มมีอาการเหนื่อย ควรพักการทำกิจกรรมและสังเกตอาการใกล้ชิด",
+    advice: "⚠️ เริ่มรู้สึกถึงการหายใจ: Slight awareness of breath. Check status.",
     icon: Info,
-    imageUrl: getDirectLink("1xtDWbIICM91Pcalk_jjMXG6mjbTadljk")
+    imageUrl: getDirectLink("1qfht_I-VCI0KdYsu4HWUsv-bG2s03que") // Updated for Score 3-5 image
   },
   {
     id: "level-3",
@@ -58,14 +58,14 @@ const LEVELS = [
     scoreDisplay: "6-8",
     defaultScore: 7,
     label: "เหนื่อยปานกลาง",
-    description: "เหนื่อยปานกลาง (Moderate Disturbance)",
+    description: "ระดับ 6-8: เหนื่อยปานกลาง (Moderate Disturbance)",
     color: "border-[#ff9800]",
     textColor: "text-[#ef6c00]",
     bgColor: "bg-[#fff3e0]",
     shadowColor: "shadow-[#fff3e0]",
-    advice: "🟠 เตรียมการช่วยเหลือทางการแพทย์ หรือแจ้งเจ้าหน้าที่ทันที",
+    advice: "🟠 หายใจลำบากระดับปานกลาง: Moderate breathlessness. Prepare intervention.",
     icon: Stethoscope,
-    imageUrl: getDirectLink("13Hcn9HlqQlQWSoWDRqeQeYMPn3BCtEjP")
+    imageUrl: getDirectLink("1Bd6Qhgu1AwDnRzGNzdgz0j9NVdrdmVmJ") // Updated for Score 6-8 image
   },
   {
     id: "level-4",
@@ -73,14 +73,14 @@ const LEVELS = [
     scoreDisplay: "9-10",
     defaultScore: 10,
     label: "เหนื่อยรุนแรง",
-    description: "เหนื่อยรุนแรงมาก! (Extreme Disturbance)",
+    description: "ระดับ 9-10: เหนื่อยรุนแรงมาก! (Extreme Disturbance)",
     color: "border-[#f44336]",
     textColor: "text-[#c62828]",
     bgColor: "bg-[#ffebee]",
     shadowColor: "shadow-[#ffebee]",
-    advice: "🆘 ประกาศภาวะฉุกเฉิน! ต้องได้รับการช่วยเหลือทางการแพทย์เร่งด่วน",
+    advice: "🆘 หายใจลำบากขั้นรุนแรง: Extreme breathlessness. URGENT Action Required!",
     icon: PhoneCall,
-    imageUrl: getDirectLink("1hGXeEKSBe_BTmcAhGcEpmGGIaqI7sHCQ")
+    imageUrl: getDirectLink("1J9kx3Ephr-iOrXjNBXaeMSM62FIMox5X") // Updated for Score 9-10 image
   }
 ];
 
@@ -160,7 +160,7 @@ export default function App() {
               <motion.div 
                 key={pointScore}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="relative w-[260px] md:w-[300px] shrink-0"
+                className="relative w-[360px] md:w-[420px] shrink-0"
               >
                 <div
                   onClick={() => handleLevelSelect(pointScore)}
@@ -171,13 +171,13 @@ export default function App() {
                       : "border-slate-100 hover:border-blue-200 bg-white"
                   )}
                 >
-                  <div className="w-full aspect-square overflow-hidden bg-white relative group flex items-center justify-center p-4">
+                  <div className="w-full aspect-square overflow-hidden bg-white relative group flex items-center justify-center">
                     <img 
                       src={level.imageUrl} 
                       alt={level.label}
                       className={cn(
-                        "w-[225px] h-[225px] object-contain transition-all duration-700",
-                        score === pointScore ? "scale-110" : "grayscale group-hover:grayscale-0 group-hover:scale-110 opacity-100"
+                        "w-[350px] h-[350px] object-contain transition-all duration-700",
+                        score === pointScore ? "scale-105" : "grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-100"
                       )}
                       referrerPolicy="no-referrer"
                     />
@@ -185,10 +185,10 @@ export default function App() {
                   </div>
                   
                   <div className="text-center w-full py-3 md:py-4 px-1 md:px-2 border-t border-slate-50 bg-white">
-                    <div className={cn("text-xs sm:text-sm md:text-lg font-black uppercase tracking-[0.05em] md:tracking-widest mb-0.5 md:mb-1 font-mono", level.textColor)}>
+                    <div className={cn("text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight mb-0.5 md:mb-1 font-mono", level.textColor)}>
                       {pointScore}
                     </div>
-                    <div className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tighter leading-tight italic flex flex-col">
+                    <div className="text-[10px] sm:text-xs md:text-sm font-bold text-slate-400 uppercase tracking-tighter leading-tight italic flex flex-col">
                       <span className="opacity-50 line-clamp-1">{level.label}</span>
                     </div>
                   </div>
@@ -224,8 +224,8 @@ export default function App() {
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-50 rounded-full -ml-24 -mb-24 opacity-10" />
               
               <div className="relative z-10 flex flex-col items-center gap-16">
-                <div className="flex flex-col items-center justify-center gap-8 w-full lg:w-[850px] shrink-0">
-                  <div className="w-full aspect-[4/5] rounded-[3.5rem] overflow-hidden border border-slate-100 shadow-[0_45px_100px_-20px_rgba(0,0,0,0.15)] bg-white relative">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-12 w-full">
+                  <div className="w-full max-w-[550px] aspect-square rounded-[3rem] overflow-hidden border border-slate-100 shadow-[0_45px_100px_-20px_rgba(0,0,0,0.12)] bg-white relative shrink-0">
                     {/* Blurred Background to minimize whitespace */}
                     <img 
                       src={currentLevel.imageUrl} 
@@ -237,15 +237,15 @@ export default function App() {
                     <img 
                       src={currentLevel.imageUrl} 
                       alt={currentLevel.label} 
-                      className="relative w-full h-full object-contain object-center scale-[1.35] transition-transform duration-500"
+                      className="relative w-full h-full object-contain transition-transform duration-500 scale-100"
                       referrerPolicy="no-referrer"
                     />
                   </div>
-                  <div className="text-center">
-                    <div className={cn("text-8xl md:text-[11rem] font-black tabular-nums tracking-tighter leading-none transition-colors duration-500", currentLevel.textColor)}>
+                  <div className="text-center lg:text-left flex-1">
+                    <div className={cn("text-[10rem] md:text-[16rem] font-black tabular-nums tracking-tighter leading-none transition-colors duration-500", currentLevel.textColor)}>
                       {score}
                     </div>
-                    <div className="text-sm font-black uppercase tracking-[0.6em] text-slate-300 mt-2">Assessment Signal</div>
+                    <div className="text-base font-black uppercase tracking-[0.6em] text-slate-300 mt-2">Assessment Signal</div>
                   </div>
                 </div>
 
@@ -253,11 +253,11 @@ export default function App() {
                   <div className="space-y-4">
                     <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-white border border-slate-100 shadow-sm">
                       <HeartPulse className={cn("w-6 h-6", currentLevel.textColor)} />
-                      <span className={cn("text-lg font-black uppercase tracking-widest", currentLevel.textColor)}>
+                      <span className={cn("text-xl md:text-2xl font-black uppercase tracking-widest", currentLevel.textColor)}>
                         ระดับ: {currentLevel.label}
                       </span>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight max-w-3xl">
+                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight max-w-3xl">
                       {currentLevel.description}
                     </h2>
                   </div>
@@ -290,7 +290,7 @@ export default function App() {
                           คำแนะนำ: Protocol Advice
                         </h3>
                       </div>
-                      <p className={cn("font-bold leading-relaxed serif text-xl lg:text-3xl", currentLevel.textColor)}>
+                      <p className={cn("font-bold leading-relaxed serif text-2xl lg:text-4xl", currentLevel.textColor)}>
                         {currentLevel.advice}
                       </p>
                     </div>
