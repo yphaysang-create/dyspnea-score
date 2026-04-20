@@ -27,13 +27,13 @@ const LEVELS = [
     scoreRange: [0, 1, 2],
     scoreDisplay: "0-2",
     defaultScore: 0,
-    label: "ปกติ (No Disturbance)",
-    description: "Resting comfortably. No change needed.",
-    color: "border-emerald-500",
-    textColor: "text-emerald-600",
-    bgColor: "bg-emerald-50/50",
-    shadowColor: "shadow-emerald-100",
-    advice: "พักผ่อนได้ตามปกติ อาการปกติ ไม่ต้องแก้ไขอะไร ควรพักผ่อนให้เพียงพอและรักษาสภาพแวดล้อมที่เหมาะสมสำหรับการพักผ่อน",
+    label: "ปกติ",
+    description: "ปกติ (No Disturbance)",
+    color: "border-[#4caf50]",
+    textColor: "text-[#2e7d32]",
+    bgColor: "bg-[#e8f5e9]",
+    shadowColor: "shadow-[#e8f5e9]",
+    advice: "✅ พักผ่อนตามปกติ ไม่ต้องมีการปรับเปลี่ยนการดูแล",
     icon: Activity,
     imageUrl: getDirectLink("1XqIBQ1hI70waw82NjQmYFwStSxOWlZga")
   },
@@ -42,13 +42,13 @@ const LEVELS = [
     scoreRange: [3, 4, 5],
     scoreDisplay: "3-5",
     defaultScore: 4,
-    label: "เล็กน้อย (Mild Disturbance)",
-    description: "Slight awareness of breath. Check status.",
-    color: "border-yellow-400",
-    textColor: "text-yellow-600",
-    bgColor: "bg-yellow-50/50",
-    shadowColor: "shadow-yellow-100",
-    advice: "เริ่มรู้สึกตัวว่าหายใจลำบากเล็กน้อย ให้ตรวจสอบอาการ ควรนั่งพักและผ่อนคลาย พยายามหายใจเข้า-ออกลึกๆ ช้าๆ",
+    label: "เหนื่อยเล็กน้อย",
+    description: "เหนื่อยเล็กน้อย (Mild Disturbance)",
+    color: "border-[#fdd835]",
+    textColor: "text-[#fbc02d]",
+    bgColor: "bg-[#fffde7]",
+    shadowColor: "shadow-[#fffde7]",
+    advice: "⚠️ เริ่มมีอาการเหนื่อย ควรพักการทำกิจกรรมและสังเกตอาการใกล้ชิด",
     icon: Info,
     imageUrl: getDirectLink("1xtDWbIICM91Pcalk_jjMXG6mjbTadljk")
   },
@@ -57,13 +57,13 @@ const LEVELS = [
     scoreRange: [6, 7, 8],
     scoreDisplay: "6-8",
     defaultScore: 7,
-    label: "ปานกลาง (Moderate Disturbance)",
-    description: "Moderate breathlessness. Prepare intervention.",
-    color: "border-orange-400",
-    textColor: "text-orange-600",
-    bgColor: "bg-orange-50/50",
-    shadowColor: "shadow-orange-100",
-    advice: "หายใจลำบากปานกลาง ควรได้รับการช่วยเหลือหรือติดตามอาการอย่างใกล้ชิด เตรียมการช่วยเหลือหากอาการไม่ดีขึ้น",
+    label: "เหนื่อยปานกลาง",
+    description: "เหนื่อยปานกลาง (Moderate Disturbance)",
+    color: "border-[#ff9800]",
+    textColor: "text-[#ef6c00]",
+    bgColor: "bg-[#fff3e0]",
+    shadowColor: "shadow-[#fff3e0]",
+    advice: "🟠 เตรียมการช่วยเหลือทางการแพทย์ หรือแจ้งเจ้าหน้าที่ทันที",
     icon: Stethoscope,
     imageUrl: getDirectLink("13Hcn9HlqQlQWSoWDRqeQeYMPn3BCtEjP")
   },
@@ -72,13 +72,13 @@ const LEVELS = [
     scoreRange: [9, 10],
     scoreDisplay: "9-10",
     defaultScore: 10,
-    label: "รุนแรงมาก (Extreme Disturbance)",
-    description: "Extreme breathlessness. URGENT Action Required!",
-    color: "border-red-600",
-    textColor: "text-red-600",
-    bgColor: "bg-red-50/50",
-    shadowColor: "shadow-red-200",
-    advice: "ภาวะฉุกเฉินระดับวิกฤต! ต้องรีบนำส่งโรงพยาบาลหรือติดต่อสายด่วนฉุกเฉิน 1669 ทันที ห้ามรอช้าเพื่อความปลอดภัยในชีวิต",
+    label: "เหนื่อยรุนแรง",
+    description: "เหนื่อยรุนแรงมาก! (Extreme Disturbance)",
+    color: "border-[#f44336]",
+    textColor: "text-[#c62828]",
+    bgColor: "bg-[#ffebee]",
+    shadowColor: "shadow-[#ffebee]",
+    advice: "🆘 ประกาศภาวะฉุกเฉิน! ต้องได้รับการช่วยเหลือทางการแพทย์เร่งด่วน",
     icon: PhoneCall,
     imageUrl: getDirectLink("1hGXeEKSBe_BTmcAhGcEpmGGIaqI7sHCQ")
   }
@@ -87,6 +87,16 @@ const LEVELS = [
 export default function App() {
   const [score, setScore] = useState<number | null>(null);
   const [currentLevel, setCurrentLevel] = useState<typeof LEVELS[0] | null>(null);
+  const [showBalloons, setShowBalloons] = useState(false);
+
+  // Generate 11 individual selection points from 0 to 10
+  const SCORE_POINTS = Array.from({ length: 11 }, (_, i) => {
+    const levelMapping = LEVELS.find(l => l.scoreRange.includes(i)) || LEVELS[LEVELS.length - 1];
+    return {
+      score: i,
+      level: levelMapping
+    };
+  });
 
   useEffect(() => {
     if (score !== null) {
@@ -96,17 +106,20 @@ export default function App() {
     }
   }, [score]);
 
-  const handleLevelSelect = (level: typeof LEVELS[0]) => {
-    setScore(level.defaultScore);
+  const handleLevelSelect = (targetScore: number) => {
+    setScore(targetScore);
   };
 
   const handleReset = () => {
     setScore(null);
     setCurrentLevel(null);
+    setShowBalloons(false);
   };
 
   const handleSubmit = () => {
     if (score !== null) {
+      setShowBalloons(true);
+      setTimeout(() => setShowBalloons(false), 3000);
       alert(`บันทึกคะแนน ${score} (${currentLevel?.label}) เรียบร้อยแล้ว!`);
     } else {
       alert("กรุณาเลือกรูปภาพก่อนบันทึก");
@@ -115,74 +128,84 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 p-4 md:p-8 flex flex-col items-center">
-      <header className="w-full max-w-6xl mb-12 text-center">
+      {/* Balloons effect placeholder */}
+      {showBalloons && (
+        <div className="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center">
+          <div className="text-6xl animate-bounce">🎈🎈🎈</div>
+        </div>
+      )}
+      <header className="w-full max-w-7xl mb-12 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Badge variant="outline" className="mb-4 border-emerald-100 text-emerald-600 font-mono text-[10px] tracking-[0.2em] uppercase py-1.5 px-4 rounded-full bg-emerald-50/30">
+          <Badge variant="outline" className="mb-4 border-[#38b2ac] text-[#2c7a7b] font-mono text-[10px] tracking-[0.2em] uppercase py-1.5 px-4 rounded-full bg-[#e6fffa]">
             Clinical Diagnostic Interface
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 leading-none mb-4">
-            Dyspnea <span className="text-emerald-500 font-light">Assessment</span>
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-[#1a365d] leading-none mb-4">
+            🫁 Dyspnea Assessment App
           </h1>
-          <p className="text-slate-500 text-lg font-medium italic serif max-w-2xl mx-auto border-t border-slate-50 pt-4">
-            แบบประเมินภาวะหายใจลำบากสำหรับผู้ป่วยและบุคคลทั่วไป
+          <p className="text-[#2d3748] text-lg font-medium italic serif max-w-2xl mx-auto border-t border-slate-50 pt-4">
+            แบบประเมินภาวะเหนื่อย (คะแนน 0-10)
           </p>
         </motion.div>
       </header>
 
-      <main className="w-full max-w-6xl space-y-12 pb-24">
-        {/* Visual Selector Grid - Single Row Layout */}
-        <section className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 w-full">
-          {LEVELS.map((level) => (
-            <motion.div 
-              key={level.id}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className="relative"
-            >
-              <div
-                onClick={() => handleLevelSelect(level)}
-                className={cn(
-                  "relative flex flex-col items-center rounded-3xl border-2 transition-all duration-300 bg-white overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.03)]",
-                  currentLevel?.id === level.id 
-                    ? `border-slate-800 ring-8 ring-blue-50 z-10 shadow-xl` 
-                    : "border-slate-100 hover:border-blue-200"
-                )}
+      <main className="w-full max-w-7xl space-y-12 pb-24 px-4 overflow-hidden">
+        {/* Visual Selector Grid - 11 Options Scale 0-10 in a horizontal scrollable row */}
+        <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
+          <section className="flex gap-4 md:gap-6 min-w-max px-4">
+            {SCORE_POINTS.map(({ score: pointScore, level }) => (
+              <motion.div 
+                key={pointScore}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                className="relative w-[260px] md:w-[300px] shrink-0"
               >
-                <div className="w-full aspect-[3/4] overflow-hidden bg-white relative group flex items-center justify-center p-3 sm:p-4">
-                  <img 
-                    src={level.imageUrl} 
-                    alt={level.label}
-                    className={cn(
-                      "max-w-full max-h-full object-contain transition-all duration-700 scale-125",
-                      currentLevel?.id === level.id ? "scale-[1.35]" : "grayscale group-hover:grayscale-0 group-hover:scale-[1.35] opacity-100"
-                    )}
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                </div>
-                
-                <div className="text-center w-full py-3 md:py-4 px-1 md:px-2 border-t border-slate-50 bg-white">
-                  <div className={cn("text-[8px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.05em] md:tracking-widest mb-0.5 md:mb-1 font-mono", level.textColor)}>
-                    คะแนน {level.scoreDisplay}
+                <div
+                  onClick={() => handleLevelSelect(pointScore)}
+                  className={cn(
+                    "relative flex flex-col items-center rounded-3xl border-2 transition-all duration-300 overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.03)]",
+                    score === pointScore 
+                      ? `${level.color} ring-8 ring-blue-50 z-10 shadow-xl ${level.bgColor}` 
+                      : "border-slate-100 hover:border-blue-200 bg-white"
+                  )}
+                >
+                  <div className="w-full aspect-square overflow-hidden bg-white relative group flex items-center justify-center p-4">
+                    <img 
+                      src={level.imageUrl} 
+                      alt={level.label}
+                      className={cn(
+                        "w-[225px] h-[225px] object-contain transition-all duration-700",
+                        score === pointScore ? "scale-110" : "grayscale group-hover:grayscale-0 group-hover:scale-110 opacity-100"
+                      )}
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                   </div>
-                  <div className="text-[7px] sm:text-[9px] md:text-[11px] font-bold text-slate-400 uppercase tracking-tighter leading-tight italic">{level.label}</div>
+                  
+                  <div className="text-center w-full py-3 md:py-4 px-1 md:px-2 border-t border-slate-50 bg-white">
+                    <div className={cn("text-xs sm:text-sm md:text-lg font-black uppercase tracking-[0.05em] md:tracking-widest mb-0.5 md:mb-1 font-mono", level.textColor)}>
+                      {pointScore}
+                    </div>
+                    <div className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-tighter leading-tight italic flex flex-col">
+                      <span className="opacity-50 line-clamp-1">{level.label}</span>
+                    </div>
+                  </div>
+                  
+                  {score === pointScore && (
+                    <motion.div 
+                      layoutId="check-icon"
+                      className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 border-4 border-white flex items-center justify-center text-white shadow-xl z-20"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                    </motion.div>
+                  )}
                 </div>
-                
-                {currentLevel?.id === level.id && (
-                  <motion.div 
-                    layoutId="check-icon"
-                    className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-slate-900 border-4 border-white flex items-center justify-center text-white shadow-xl z-20"
-                  >
-                    <CheckCircle2 className="w-5 h-5" />
-                  </motion.div>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </section>
+              </motion.div>
+            ))}
+          </section>
+        </div>
 
         {/* Detailed Assessment Panel */}
         <AnimatePresence mode="wait">
@@ -256,15 +279,19 @@ export default function App() {
                   </div>
 
                   <div className="grid lg:grid-cols-2 gap-8 pt-8 w-full max-w-5xl">
-                    <div className="space-y-4 bg-white p-8 rounded-[2.5rem] border border-slate-50 text-left shadow-sm">
+                    <div className={cn("space-y-4 p-8 rounded-[2.5rem] border text-left shadow-sm transition-colors duration-500", 
+                      currentLevel.bgColor, currentLevel.color
+                    )}>
                       <div className="flex items-center gap-3 mb-2">
-                        <div className={cn("p-2 rounded-xl bg-white shadow-sm border border-slate-50", currentLevel.textColor)}>
+                        <div className={cn("p-2 rounded-xl bg-white shadow-sm border", currentLevel.textColor)}>
                           <Stethoscope className="w-5 h-5" />
                         </div>
-                        <h3 className="text-xs font-black text-slate-300 uppercase tracking-widest">Protocol Advice</h3>
+                        <h3 className={cn("text-xs font-black uppercase tracking-widest opacity-60", currentLevel.textColor)}>
+                          คำแนะนำ: Protocol Advice
+                        </h3>
                       </div>
-                      <p className="text-slate-600 font-medium leading-relaxed italic serif text-xl lg:text-2xl">
-                        "{currentLevel.advice}"
+                      <p className={cn("font-bold leading-relaxed serif text-xl lg:text-3xl", currentLevel.textColor)}>
+                        {currentLevel.advice}
                       </p>
                     </div>
 
